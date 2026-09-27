@@ -124,8 +124,8 @@ function db_migrate(PDO $pdo, array $config): void
 function db_ensure_column(PDO $pdo, array $config, string $table, string $column, string $definition): void
 {
     if ($config['db_driver'] === 'mysql') {
-        $stmt = $pdo->prepare("SHOW COLUMNS FROM `$table` LIKE ?");
-        $stmt->execute([$column]);
+        // MariaDB no acepta placeholders en SHOW ... LIKE; el nombre es interno.
+        $stmt = $pdo->query("SHOW COLUMNS FROM `$table` LIKE " . $pdo->quote($column));
         $exists = (bool) $stmt->fetch();
     } else {
         $exists = false;
