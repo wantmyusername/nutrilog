@@ -81,7 +81,7 @@ export function Dashboard() {
         </div>
         <Button variant="primary" className="px-6 py-3 text-base" onClick={() => navigate('/patients/new')}>
           <Plus className="h-5 w-5" />
-          Nuevo paciente
+          Añadir nuevo paciente
         </Button>
       </div>
 
