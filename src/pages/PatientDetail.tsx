@@ -1,6 +1,17 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Cake, CalendarDays, CheckCircle2, Plus, Printer, Ruler, Scale } from 'lucide-react'
+import {
+  ArrowLeft,
+  Cake,
+  CalendarDays,
+  CheckCircle2,
+  LayoutDashboard,
+  Plus,
+  Printer,
+  Ruler,
+  Scale,
+  TrendingUp,
+} from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { appointmentsApi, patientsApi } from '../api/endpoints'
 import type { Appointment, Patient } from '../api/types'
@@ -160,14 +171,15 @@ export function PatientDetail() {
 
   return (
     <>
-      <button
-        type="button"
-        className="text-sm font-medium text-muted transition-colors hover:text-ink"
+      <Button
+        variant="outline"
+        size="sm"
+        className="font-bold text-ink hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
         onClick={() => navigate('/patients')}
       >
-        <ArrowLeft className="mr-1 inline h-4 w-4 align-[-3px]" />
+        <ArrowLeft className="h-4 w-4" />
         Pacientes
-      </button>
+      </Button>
 
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-center gap-4">
@@ -203,40 +215,52 @@ export function PatientDetail() {
           <div className="h-1.5 w-44 max-w-full overflow-hidden rounded-full bg-amber-200">
             <div className="h-full rounded-full bg-amber-500 transition-all duration-300" style={{ width: `${completion}%` }} />
           </div>
-          <button type="button" className="ml-auto whitespace-nowrap font-bold hover:underline" onClick={editPatient}>
+          <Button
+            size="sm"
+            variant="outline"
+            className="ml-auto shrink-0 whitespace-nowrap border-amber-300 bg-white font-bold text-amber-700 hover:bg-amber-100"
+            onClick={editPatient}
+          >
             Completar →
-          </button>
+          </Button>
         </div>
       )}
 
-      <nav className="mt-6 mb-6 inline-flex flex-wrap items-center gap-1 rounded-xl bg-gray-100 p-1">
+      <nav className="mt-6 mb-6 flex flex-wrap items-center gap-2 rounded-2xl border border-line bg-gray-50 p-2 shadow-sm">
         {([
-          ['resumen', 'Resumen'],
-          ['citas', 'Visitas'],
-          ['progreso', 'Progreso'],
-        ] as [Tab, string][]).map(([value, label]) => (
-          <button
-            key={value}
-            type="button"
-            className={cx(
-              'flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-all',
-              tab === value ? 'bg-white text-indigo-600 shadow-sm' : 'text-muted hover:text-ink',
-            )}
-            onClick={() => setTab(value)}
-          >
-            {label}
-            {value === 'citas' && (
-              <span
-                className={cx(
-                  'rounded-full px-2 py-0.5 text-[11px] font-bold',
-                  tab === value ? 'bg-indigo-50 text-indigo-600' : 'bg-gray-200 text-gray-600',
-                )}
-              >
-                {appointments.length}
-              </span>
-            )}
-          </button>
-        ))}
+          ['resumen', 'Resumen', LayoutDashboard],
+          ['citas', 'Visitas', CalendarDays],
+          ['progreso', 'Progreso', TrendingUp],
+        ] as [Tab, string, LucideIcon][]).map(([value, label, Icon]) => {
+          const active = tab === value
+          return (
+            <button
+              key={value}
+              type="button"
+              aria-current={active ? 'page' : undefined}
+              className={cx(
+                'flex items-center gap-2 rounded-xl border px-4 py-3 text-[15px] font-bold transition-all sm:px-6',
+                active
+                  ? 'border-indigo-600 bg-indigo-600 text-white shadow-md shadow-indigo-600/25'
+                  : 'border-line bg-white text-ink shadow-sm hover:border-indigo-300 hover:text-indigo-700',
+              )}
+              onClick={() => setTab(value)}
+            >
+              <Icon className="h-5 w-5" />
+              {label}
+              {value === 'citas' && (
+                <span
+                  className={cx(
+                    'rounded-full px-2 py-0.5 text-xs font-bold',
+                    active ? 'bg-white/25 text-white' : 'bg-gray-100 text-gray-600',
+                  )}
+                >
+                  {appointments.length}
+                </span>
+              )}
+            </button>
+          )
+        })}
       </nav>
 
       {tab === 'resumen' && (
@@ -659,7 +683,7 @@ function InfoItem({
         <div className="mt-1.5 flex items-center gap-2 text-base text-faint">
           <span>Sin registrar</span>
           {onAdd && (
-            <button type="button" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 hover:underline" onClick={onAdd}>
+            <button type="button" className="inline-flex items-center gap-1 rounded-md border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-sm font-bold text-indigo-600 transition-colors hover:bg-indigo-100" onClick={onAdd}>
               + Agregar
             </button>
           )}
@@ -701,7 +725,7 @@ function ContactItem({
           {onAdd && (
             <button
               type="button"
-              className="text-sm font-bold text-indigo-600 hover:text-indigo-500 hover:underline"
+              className="inline-flex items-center gap-1 rounded-md border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-sm font-bold text-indigo-600 transition-colors hover:bg-indigo-100"
               onClick={onAdd}
             >
               + Agregar

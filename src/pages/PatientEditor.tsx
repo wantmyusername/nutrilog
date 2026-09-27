@@ -68,14 +68,15 @@ export function PatientEditor() {
               : 'Registra los datos de contacto, requerimientos y observaciones del paciente.'}
           </p>
         </div>
-        <button
-          type="button"
-          className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-ink"
+        <Button
+          variant="outline"
+          size="sm"
+          className="shrink-0 font-bold text-ink hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
           onClick={() => navigate(backTo)}
         >
           <ArrowLeft className="h-4 w-4" />
           Volver
-        </button>
+        </Button>
       </div>
 
       {loading ? (
