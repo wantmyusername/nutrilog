@@ -13,11 +13,13 @@ import { VisitEditor } from './pages/VisitEditor'
 import { VisitView } from './pages/VisitView'
 import { PrintView } from './pages/PrintView'
 
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
 export default function App() {
   return (
     <AuthProvider>
       <ToastProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={basename}>
           <Routes>
           <Route path="/login" element={<Login />} />
           <Route

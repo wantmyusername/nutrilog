@@ -6,13 +6,16 @@ export class ApiError extends Error {
   }
 }
 
+// Base del API según el deploy (raíz o subcarpeta). En dev BASE_URL = '/'.
+const API_BASE = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api`
+
 interface RequestOptions {
   method?: string
   body?: unknown
 }
 
 export async function api<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`${API_BASE}${path}`, {
     method: options.method ?? 'GET',
     headers: options.body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
     body: options.body !== undefined ? JSON.stringify(options.body) : undefined,

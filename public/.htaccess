@@ -1,5 +1,6 @@
 RewriteEngine On
-RewriteBase /
+# Subcarpeta de despliegue (cámbialo si mueves el sitio a otra ruta).
+RewriteBase /nutriologa/
 
 # La API PHP maneja sus propias rutas.
 RewriteRule ^api/ - [L]

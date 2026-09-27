@@ -21,6 +21,8 @@ jobs:
 
       - name: Compilar frontend
         run: npm run build
+        env:
+          VITE_BASE: /nutriologa/
 
       - name: Armar carpeta de despliegue
         run: |

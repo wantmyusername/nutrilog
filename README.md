@@ -98,7 +98,7 @@ En el repo: **Settings → Secrets and variables → Actions → New repository 
 | `FTP_SERVER` | `ftp.tudominio.com` | Servidor FTP |
 | `FTP_USERNAME` | `usuario@tudominio.com` | Usuario FTP |
 | `FTP_PASSWORD` | `••••••` | Contraseña FTP |
-| `FTP_SERVER_DIR` | `public_html/nutrilog/` | Carpeta destino |
+| `FTP_SERVER_DIR` | `public_html/nutriologa/` | Carpeta destino (subcarpeta del dominio) |
 
 > Usa una carpeta o subdominio **dedicado** (p. ej. `nutrilog.tudominio.com`). El paso de
 > deploy sincroniza y **borra en esa carpeta** lo que no esté en el repo, así que no
@@ -119,6 +119,16 @@ Deploy a cPanel → Run workflow**.
 `npm run build` y sube el contenido de `dist/` a la raíz pública más la carpeta `api/`
 dentro de `public_html/api/`. Los `.htaccess` ya incluyen el fallback de la SPA y el
 enrutado de la API.
+
+### Subcarpeta (ej. `/nutriologa`)
+
+El proyecto se despliega en la subcarpeta `nutriologa` del dominio. Para eso:
+
+- El workflow compila con `VITE_BASE=/nutriologa/` (assets y API bajo esa ruta).
+- `public/.htaccess` tiene `RewriteBase /nutriologa/`.
+- `FTP_SERVER_DIR` apunta a `public_html/nutriologa/`.
+
+Si cambias la subcarpeta, actualiza esos tres valores.
 
 ## Scripts
 
